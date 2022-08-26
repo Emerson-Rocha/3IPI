@@ -30,6 +30,7 @@ class Livros{
    private $genero;
    private $capa; // caminha da imagem c://
    private $qtdImp;
+   protected $valor = 100;
 
    // construtor
    public function __construct(){}
@@ -50,6 +51,15 @@ class Livros{
    public function __get($atributo){
        return $this->$atributo;
    }
+
+
+   // criar um metodo de dar deconto para a venda do livro
+
+   public function descVenda($porcentagemDesc){
+    return  $this->valor  - ( ($this->valor * $porcentagemDesc) / 100 );
+
+   }
+
 
 }
 
