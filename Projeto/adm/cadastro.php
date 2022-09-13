@@ -50,44 +50,7 @@ include_once("../servidor.php");
                         <div class="form-group">
                             <label for="ed">Editora: </label>
                             
-                            <?php
-                            //-------PROCEDURAL ---------
-                              // sql string;
-                              $sqlEditora = "select * from tb_editora";
-                              // executar
-                              $resp = mysqli_query($link,$sqlEditora);
-                            
-                            // --------- POO ---------
-                              $OopResult = $OOP->query($sqlEditora)
-
-                             // mysqli_fetch_array - resultado como uma matriz associativa, numérica, ou ambas
-                                //(Os valores possíveis para este parâmetro são as constantes MYSQLI_ASSOC, MYSQLI_NUM, ou MYSQLI_BOTH)
-                             // mysqli_result()-   resultados como uma matriz associativa;
-                             // mysqli_fetch_row — resultado como uma matriz numerada
-                            ?>
-                            
-                            
-                            
-                            <select class="form-control" name="ed" id="ed">
-                               
-                            <option>Selecione ...</option>
-                            <?php
-                                // ----- PROCEDURAL -----
-                             
-
-                            //    // exibir as editoras automatico;
-                            //    while($linha = mysqli_fetch_array($resp) ){
-                            //           echo "<option  value='".$linha["cod_ed"]."'>".$linha["nome_ed"]."</option>";
-                           //    }
-
-                             //----- POO ----------
-
-                               while( $row =  $OopResult->fetch_array()){
-                                echo "<option  value='".$row["cod_ed"]."'>"
-                                .$row["nome_ed"]."</option>";
-                            }
-                               
-                            ?> 
+                           
                             
                             </select>
 
