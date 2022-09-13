@@ -17,14 +17,12 @@ session_start();
 
 <body>
     <div class="container">
-    <?php
-                // Colocar identificação de usuário:
-                if (isset($_SESSION["login"])) {
+       <?php
+        // apereça o nome do usuário
+       echo "<h3> Olá " .utf8_encode($_SESSION['login']['nome'])."</h3>"; 
 
-                    echo "<h5>Olá, " . $_SESSION["login"]["nome"] . "</h5>";
-                }
-
-                ?>
+       ?>
+              
         <nav class="nav nav-pills flex-column flex-sm-row">
             <a class="flex-sm-fill text-sm-center nav-link" href="cadastro.php" target="link">Cadastro de livros</a>
             <a class="flex-sm-fill text-sm-center nav-link" href="lista_livro.php" target="link">Lista de Livros</a>
