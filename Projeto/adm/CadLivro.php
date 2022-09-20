@@ -1,67 +1,62 @@
-
-
 <?php
+// sessão
 session_start();
-// Incluir a conexao com o servidor
-include_once ("../servidor.php");
 
-//Referência de variaveis
+include("../servidor.php");
 
-$tituto   = $_POST["titulo"]; 
-$desc     = $_POST["desc"];
-$valor    = $_POST["valor"];
-$cod_ed   = $_POST["ed"];
+// variveis do formulário
 
-$imagem   =$_FILES["arq"];
+$titulo = $_POST["titulo"];
+$desc = $_POST["desc"];
+$valor = $_POST["valor"];
+$cod_ed = $_POST["ed"];
+$imagem = $_FILES["arq"];
 
+// caminho da imagem 
 
-// Peguei sem fazer tratamento
-$diretorio = "img/" . $imagem ["name"]; 
+$dir = "img/" .$imagem["name"];
 
-// sql da tabela  livro e  editora
-$sqlInsert = "insert into tb_livro(cod_ed, titulo_liv, desc_liv, img_liv, valor_liv)"; 
-$sqlInsert .= " values($cod_ed, '$tituto', '$desc', '$diretorio' ,'$valor')"; 
+// inserindo valor no banco
 
-//echo $sqlInsert ;
+$sql = " insert into tb_livro(cod_ed, titulo_liv, desc_liv, img_liv, valor_liv) ";
+$sql .= " values($cod_ed, '$titulo', '$desc', '$dir' , '$valor') ";
 
 
-// Executart e pegar o resultado  do banco de dados;
-$res =  mysqli_query($link, $sqlInsert);
+// executar
+
+   $res  = mysqli_query($banco, $sql);
+
+   // preciso saber se foi insirida no banco 
 
 
+  if(mysqli_affected_rows($banco) ){
+     echo "<script type='text/javascript'> 
+             alert('cadastro feito!!!');
+           </script>";
+        
+           // mover par a pasta img
+
+           move_uploaded_file( $imagem["tmp_name"], $dir);
 
 
-// mysqli_affected_rows()  Retorna o número de linhas afetadas pela INSERT , UPDATE , REPLACE ou DELETE
- //echo mysqli_error($link); // saber o erro do mysql;
-//echo mysqli_affected_rows($link);
- 
-if (mysqli_affected_rows($link)){
-    echo "Cadastrado Livro";
-    //mover a arquivo para o diretorio
-    move_uploaded_file ( $imagem["tmp_name"] , $diretorio );
+           //pegar o id registrado automaticamente 
 
-    // colcar na tabela usuario e livro para saber que adicionou 
-    // pegar o id de registra que a id inserir
-       $cod_liv =  mysqli_insert_id($link);
+           $cod_liv = mysqli_insert_id($banco);
 
-      $sqlCadlivro = "insert into tb_cad_livro values(". $_SESSION["login"]["id"]."," .$cod_liv.")";
+           // inserir na tabela cad_liv
 
-      
-      // executar
-        mysqli_query($link, $sqlCadlivro);
+           $sql = " INSERT INTO TB_CAD_LIVRO 
+              VALUES(".$_SESSION['login']['id'] .", " . $cod_liv." )";
 
-      //echo "<br><a href='menu.php'>voltar</a>";
+             //executar
+             
+             mysqli_query($banco , $sql);
 
 
+    
 
-}
-else{
-    echo mysqli_error($link); // saber o erro do mysql;
-}
-
+  }
 
 
 
-// fechar o conexão
-mysqli_close($link);
 ?>
