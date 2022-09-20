@@ -49,7 +49,21 @@ include_once("../servidor.php");
 
                         <div class="form-group">
                             <label for="ed">Editora: </label>
-                            
+                            <select class="form-control" name="ed" id="ed">
+                                <option>Selecione ..</option>
+                            <?php
+                              $editora = " select * from tb_editora ";
+                               // executar
+                               $resp = mysqli_query($banco, $editora);
+
+                               // visualizar os dados 
+                             while( $tabela = mysqli_fetch_array( $resp)){
+
+                                echo "<option value='".$tabela["cod_ed"]. "'>"
+                                     .$tabela["nome_ed"]. "</option>";
+                             }
+
+                            ?>
                            
                             
                             </select>
@@ -80,3 +94,9 @@ include_once("../servidor.php");
 <script src="../js/popper.min.js"></script>
 
 </html>
+
+<?php
+// fechar o banco 
+mysqli_close($banco);
+
+?>
