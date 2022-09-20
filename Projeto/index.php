@@ -18,7 +18,29 @@ include_once("servidor.php");
 <tr>
       
     <?php
-  
+     // query para exibir o livros 
+
+    $sql = "SELECT  cod_liv, titulo_liv, valor_liv, img_liv
+     FROM  tb_livro;";
+
+   // EXECUTAR
+    $resp =   mysqli_query($banco , $sql);
+
+    // exibir os itens do banco
+
+    while( $tabela = mysqli_fetch_array($resp)){
+        echo " <td >
+           <p> 
+             <img src='adm/".$tabela["img_liv"] ."'>
+           </p>
+            <h3>". $tabela["titulo_liv"] ." </h3>
+            <p>". number_format($tabela["valor_liv"],2, ",",".") 
+             ."</p>
+
+
+           </td>";
+
+    }
 
 ?>
     </tr>
