@@ -15,7 +15,7 @@ include_once("servidor.php");
 <body>
 <div class="container mt-5">
 <table class="table table-bordered">
-<tr>
+
       
     <?php
      // query para exibir o livros 
@@ -27,8 +27,13 @@ include_once("servidor.php");
     $resp =   mysqli_query($banco , $sql);
 
     // exibir os itens do banco
+    $coluna = 0;
 
     while( $tabela = mysqli_fetch_array($resp)){
+        if($coluna == 0 ){
+            echo "<tr>";
+        }
+        if($coluna < 4){
         echo " <td >
            <p> 
              <img src='adm/".$tabela["img_liv"] ."'>
@@ -36,14 +41,21 @@ include_once("servidor.php");
             <h3>". $tabela["titulo_liv"] ." </h3>
             <p>". number_format($tabela["valor_liv"],2, ",",".") 
              ."</p>
-
+       
+              <a href='detalhe.php?cod_liv=".$tabela["cod_liv"]."'>
+              Detalhe</a>
 
            </td>";
+           $coluna++;
+        }else{
+            echo "</tr>";
+            $coluna = 0;
+        }
 
     }
 
 ?>
-    </tr>
+   
 
 </table>
 
