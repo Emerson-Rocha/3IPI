@@ -51,9 +51,8 @@ $sql .= " values($cod_ed, '$titulo', '$desc', '$dir' , '$valor') ";
              //executar
              
              mysqli_query($banco , $sql);
-
-
-    
+             // DIRECIONAR PARA O MENU
+            // header('location:menu.php');   
 
   }
 

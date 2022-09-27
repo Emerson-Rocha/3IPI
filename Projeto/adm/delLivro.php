@@ -12,39 +12,17 @@
 <body>
     <div class="container">
 
+
 <?php
-// caminho do servidor
-
 include_once("../servidor.php");
+  // fazer o codigo para deletar o produto
+   $cod_liv = $_GET["cod_liv"];
 
-// pegar a variavel
- $cod_liv = $_GET["cod_liv"];
+   $del = "delete from  tb_livro  where cod_liv = ". $cod_liv;
 
+   mysqli_query($banco, $del);
+ 
 
-// sql deleta
-$delSQL = "delete from tb_livro ";
-$delSQL .=" where cod_liv = ".$cod_liv;
-
-
-//echo $delSQL;
-
-
-// executa
- mysqli_query($link,$delSQL);
-
-
- // mysqli_affected_rows - Obtém o número de linhas afetadas em uma operação MySQL anterior
- if ( mysqli_affected_rows($link) == 1){
-      echo "Deletado com sucesso !";
-      
- }
- else{
-
-    echo mysqli_error($link);
- }
-
- //echo "<br><a href='lista_livro.php'>voltar</a>";
-mysqli_close($link);
 
 ?>
 </body>

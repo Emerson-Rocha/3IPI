@@ -1,4 +1,4 @@
-tit<?php
+<?php
 // iniciar session;
 session_start();
 // incluir o servidor
@@ -25,7 +25,13 @@ include_once("../servidor.php");
             </section>
 
             <?php
-              
+                // query
+                 $sql = " SELECT * FROM TB_LIVRO WHERE COD_LIV = " . $_GET["cod_liv"];
+                 // executar
+                  $resp =  mysqli_query($banco , $sql);
+                 // exibir(array)
+                  $campo =  mysqli_fetch_array($resp); // indice, associativo
+
 
             ?>
 
@@ -52,16 +58,32 @@ include_once("../servidor.php");
                             <label for="ed">Editora: </label>
 
                             <?php
-                            
+                                // query
+                                   $SQL = " SELECT * FROM TB_EDITORA ";
+                                // executar
+                                  $resp = mysqli_query($banco , $SQL);
+
+                                // exibir
+
                             ?>
-
-
-
                             <select class="form-control" name="ed" id="ed">
 
                                 <option>Selecione ...</option>
                                 <?php
-                               
+                                  while ($ed = mysqli_fetch_array( $resp)) {
+                                    echo "<option value='".$ed["cod_ed"] ."' ";
+                                      // livros    //ed
+                                    if( $campo["cod_ed"] == $ed["cod_ed"]){                                      
+                                         echo "selected" ;
+                                      }
+                                    
+                                    
+                                    echo  " > "
+                                         . $ed["nome_ed"].
+                                         "</option>";
+
+                                  }
+                                    
                                 ?>
 
                             </select>
