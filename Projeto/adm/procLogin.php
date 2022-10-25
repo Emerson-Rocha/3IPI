@@ -18,21 +18,29 @@ $sql .= " where login_us = '".$login."' and  senha_us ='".md5($senha)."'";
 
 // executar a string feita em php e converte em comando sql
 
-   $resultado  = mysqli_query($banco, $sql );
+   //$resultado  = mysqli_query($banco, $sql );
+
+## passar o comando acima para P.O.O
+
+    $resultado = $POO->query($sql);
+
 // saber o numero de linha retornado
    //echo mysqli_num_rows($resultado);
-
-   if(mysqli_num_rows($resultado) == 1){
+   //mysqli_num_rows($resultado)
+   ## passar o comando de linhas para P.O.O
+   if( $resultado->num_rows == 1){
      // a consulta no banco  retorna e array
-       $tabela = mysqli_fetch_array($resultado);
-
+      // $tabela = mysqli_fetch_array($resultado);
+    ## passar o comando acima para P.O.O
+          $tabela = $resultado->fetch_array();
       //  echo $tabela['nome_us'];
       //  echo $tabela['cod_us'];
       // echo $tabela['senha_us'];
        // session
-       $_SESSION['login']['id']=  $tabela['cod_us']; ;
-       $_SESSION['login']['nome'] =  $tabela['nome_us'];
+      $_SESSION['login']['id']=  $tabela['cod_us']; ;
+      $_SESSION['login']['nome'] =  $tabela['nome_us'];
       
+    
       
       // direcionar para tela menu 
      header("location: menu.php");      

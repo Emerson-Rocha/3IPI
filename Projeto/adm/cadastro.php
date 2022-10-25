@@ -49,22 +49,46 @@ include_once("../servidor.php");
 
                         <div class="form-group">
                             <label for="ed">Editora: </label>
-                            <select class="form-control" name="ed" id="ed">
-                                <option>Selecione ..</option>
+                            
                             <?php
-                              $editora = " select * from tb_editora ";
-                               // executar
-                               $resp = mysqli_query($banco, $editora);
+                            //-------PROCEDURAL ---------
+                              // sql string;
+                              $sqlEditora = "select * from tb_editora";
+                              // executar
+                             // $resp = mysqli_query($link,$sqlEditora);
+                            
+                            // --------- POO ---------
+                               ## passar o comando para P.O.O
+                               $resp = $POO->query($sqlEditora);
 
-                               // visualizar os dados 
-                             while( $tabela = mysqli_fetch_array( $resp)){
-
-                                echo "<option value='".$tabela["cod_ed"]. "'>"
-                                     .$tabela["nome_ed"]. "</option>";
-                             }
-
+                             // mysqli_fetch_array - resultado como uma matriz associativa, numérica, ou ambas
+                                //(Os valores possíveis para este parâmetro são as constantes MYSQLI_ASSOC, MYSQLI_NUM, ou MYSQLI_BOTH)
+                             // mysqli_result()-   resultados como uma matriz associativa;
+                             // mysqli_fetch_row — resultado como uma matriz numerada
                             ?>
-                           
+                            
+                            
+                            
+                            <select class="form-control" name="ed" id="ed">
+                               
+                            <option>Selecione ...</option>
+                            <?php
+                                // ----- PROCEDURAL -----
+                             
+
+                            //    // exibir as editoras automatico;
+                            //    while($linha = mysqli_fetch_array($resp) ){
+                            //           echo "<option  value='".$linha["cod_ed"]."'>".$linha["nome_ed"]."</option>";
+                           //    }
+
+                             //----- POO ----------
+                                 ## PASSAR O COMANDO ACIMA PARA P.O.O
+                               while( $row =  $resp->fetch_array()){
+                                echo "<option  value='".$row["cod_ed"]."'>"
+                                .$row["nome_ed"]."</option>";
+                            }
+                               
+                            ?> 
                             
                             </select>
 
@@ -88,15 +112,11 @@ include_once("../servidor.php");
             <section class="col-md-2"></section>
         </div>
     </div>
-
+<?php
+  $POO->close();
+?>
 </body>
 <script src="../js/jquery-3.5.1.slim.min.js"></script>
 <script src="../js/popper.min.js"></script>
 
 </html>
-
-<?php
-// fechar o banco 
-mysqli_close($banco);
-
-?>

@@ -24,12 +24,14 @@ $sql .= " values($cod_ed, '$titulo', '$desc', '$dir' , '$valor') ";
 
 // executar
 
-   $res  = mysqli_query($banco, $sql);
+  // $res  = mysqli_query($banco, $sql);
+   ## P O O
+    $resp = $POO->query($sql);
 
    // preciso saber se foi insirida no banco 
+   //mysqli_affected_rows($banco)
 
-
-  if(mysqli_affected_rows($banco) ){
+  if( $POO->affected_rows){
      echo "<script type='text/javascript'> 
              alert('cadastro feito!!!');
            </script>";
@@ -41,7 +43,9 @@ $sql .= " values($cod_ed, '$titulo', '$desc', '$dir' , '$valor') ";
 
            //pegar o id registrado automaticamente 
 
-           $cod_liv = mysqli_insert_id($banco);
+           //$cod_liv = mysqli_insert_id($banco);
+            # P O O
+              $cod_liv = $POO->insert_id ;
 
            // inserir na tabela cad_liv
 
@@ -50,7 +54,9 @@ $sql .= " values($cod_ed, '$titulo', '$desc', '$dir' , '$valor') ";
 
              //executar
              
-             mysqli_query($banco , $sql);
+             //mysqli_query($banco , $sql);
+               $POO->query($sql);
+               
              // DIRECIONAR PARA O MENU
             // header('location:menu.php');   
 
