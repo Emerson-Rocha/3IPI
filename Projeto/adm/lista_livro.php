@@ -35,27 +35,32 @@ include_once("../servidor.php");
                 <tbody>
 
                 <?php
+                      $sql = " SELECT cod_liv, titulo_liv, valor_liv FROM TB_LIVRO ";
+                       // EXECUTAR
+                       //$resp =  mysqli_query($banco, $sql);
+                       ## Passar para Programação Objeto
+                             $resp =   $POO->query($sql);
+                            // mysqli_fetch_array($resp)
+                       while( $tabela = $resp->fetch_array()  ){
+                          echo "<tr>
+                                 <th scope='row'>".$tabela["cod_liv"]."</th>
+                                 <td>".$tabela["titulo_liv"]."</td>
+                                 <td>R$  ".number_format($tabela["valor_liv"], 2, ",",".")."</td> 
+                                 <td>
+                                     <a href='altLivro.php?cod_liv=".$tabela["cod_liv"]."'> 
+                                       <img src='img/edit.png' width='32' title='Editar'></a> |
+                                     
+                                       <a href='delLivro.php?cod_liv=".$tabela["cod_liv"]."'> 
+                                      <img src='img/delete.png' width='32' title='Deletar'></a>
+                                 </td>  
+                               </tr>";
+                       
+                        }
 
-                  //sql lista de livros string
-                  $sqlivro = "select cod_liv, titulo_liv, valor_liv from tb_livro";
 
-                  // executar
-                   $resultado = mysqli_query($link,$sqlivro);
 
-                     while( $linha = mysqli_fetch_array($resultado)  ){  
-                      echo "<tr>";
-                        echo "<th scope='row'>".$linha["cod_liv"] ."</th>";
-                        echo "<td>".$linha["titulo_liv"] ."</td>";
-                        echo "<td>".$linha["valor_liv"] ."</td>";
-                        echo "<td>
-                           <a href='altLivro.php?cod_liv=".$linha["cod_liv"]."' > Alterar </a>
-                           /
-                           <a href='delLivro.php?cod_liv=".$linha["cod_liv"]."' > Deletar </a>
-                        
-                           </td>";
-                      echo "</tr>";
-                     }
-                   
+
+
                    ?>
                     
                 </tbody>
@@ -73,3 +78,9 @@ include_once("../servidor.php");
 <script src="../js/popper.min.js"></script>
 
 </html>
+
+<?php
+ //mysqli_close($banco);
+
+ $POO->close();
+?>
